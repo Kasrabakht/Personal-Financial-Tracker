@@ -1,0 +1,173 @@
+:root{
+    --bg1:#4328b4;
+  --bg2:#2c1f92;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --primary:#3b29ff;
+  --primary-700:#2b1fe0;
+  --input:#2f2f2f;
+  --ring:#9aa6ff;
+  --shadow: 0 20px 45px rgba(0,0,0,.15);
+  --radius: 18px;
+}
+
+*{ box-sizing: border-box; }
+
+html, body, #root{
+    height: 100%;
+}
+
+body{
+  margin: 0;
+  width: 100%;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color: var(--text);
+  background: radial-gradient(1200px 800px at 50% -200px, var(--bg1), var(--bg2));
+  background-image: url("../Assets/Background.jpg");
+}
+
+/*Center the card */
+.container{
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+/* Card */
+.container > .header{
+  background: rgba(255, 255, 255, 0.2); /* white with 20% opacity */
+  backdrop-filter: blur(10px);           /* frosted glass effect */
+  -webkit-backdrop-filter: blur(10px);   /* for Safari */
+  width: 100%;
+  padding: 48px 48px;  /* more padding inside */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+
+/* Title (if you use an <h1> inside header, style it like this) */
+.header-title{
+  margin: 0 0 18px;
+  margin-bottom: 24px;
+  font-size: 25px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: whitesmoke;
+}
+
+/* Form layout */
+form.submit{
+  margin-top: 8px;
+  display: grid;
+  gap: 20px;
+  text-align: left; /* inputs align left but card title stays centered */
+}
+
+
+/* Inputs */
+input{
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(12px);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+  color: black;
+}
+
+input::placeholder{ color: #a3a3a3; }
+
+input:focus{
+  border-color: var(--ring);
+  box-shadow: 0 0 0 4px rgba(59,41,255,.15);
+  background: #fff;
+}
+
+/* Forgot password row (only in login mode) */
+.forget-password{
+  margin-top: -4px;
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  font-weight: 50;
+}
+
+.forget-password a{
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.forget-password a:hover{
+  text-decoration: underline;
+}
+
+/* Primary submit button */
+.Submit{
+  margin-top: 6px;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 16px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  transition: transform .04s ease, background .15s ease, box-shadow .15s ease;
+  box-shadow: 0 10px 25px rgba(59,41,255,.25);
+}
+
+.Submit:hover{ background: var(--primary-700); }
+.Submit:active{ transform: translateY(1px); }
+
+/* Switcher section under the form */
+.no-account{
+  margin-top: 25px;
+  font-size: 15px;
+  font-weight: 50;
+  color: var(--text);
+  text-align: center;
+  gap: 10px;
+}
+
+/* “Sign up!” / “Log in.” styled like a link */
+.linklike, .linkLike{
+  background: none;
+  border: none;
+  padding: 0 4px;
+  margin-left: 4px;
+  font-size: 15px;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.linklike:hover, .linkLike:hover{
+  text-decoration: underline;
+}
+
+/* Secondary action button (your black Login button in the image) */
+.secondary-btn{
+  width: 100%;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-weight: 700;
+  background: #1f1f1f;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Responsive tweaks */
+@media (max-width: 520px){
+  .container > .header{ padding: 28px 22px 22px; }
+  .header-title{ font-size: 26px; }
+  .no-account{ font-size: 16px; }
+}
