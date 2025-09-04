@@ -1,4 +1,4 @@
-Personal Finance Tracker (WIP)
+Personal Finance Tracker (In Progress)
 
 A full-stack app to track expenses, savings goals, and payment methods.
 Status: In active development. The repo contains a working dev environment (client + server), simple auth (client-side), and basic CRUD for financial records.
