@@ -3,6 +3,8 @@ import email_icon from "../assets/email.jpg"
 import "../Styles/Login.css"
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { email } from "zod";
+import { login, signup } from "../Context/logIn.jsx"; 
 
 
 
@@ -29,13 +31,32 @@ function loginPage()
     setForm((f)=>({...f, [name]:value}));
   }
 
-  function handleSubmit(e)
+  async function handleSubmit(e)
   {
     e.preventDefault();
 
-    // Very basic checks; replace with real validation/auth
+    
     if (!form.email.trim() || !form.password.trim()) return;
     if (!isLogin && !form.username.trim()) return;
+
+    try{
+      const{user,token}=isLogin ? (await login({email:form.email, password:form.password})):
+      (await signup({username: form.username, email:form.email,password:form.password}))
+
+      localStorage.setItem("token",token);
+      localStorage.setItem("user", JSON.stringify(user));
+      signIn(user);
+      navigate(form,{replace:true});
+  
+
+    }
+    catch(err)
+      {
+    // on failure, ensure you're NOT authenticated
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    alert(err.message || "Invalid credentials");  // do NOT navigate
+      }
 
     if(isLogin)
     {
@@ -52,7 +73,7 @@ function loginPage()
 
   return(
    <div className="container">
-     <div className="header"><h1 className="header-title">{isLogin ? "Login":"Sing Up"}</h1>
+     <div className="header"><h1 className="header-title">{isLogin ? "Login":"Sign Up"}</h1>
         <form className="submit" onSubmit={handleSubmit}>
          {!isLogin && (
           <div className="username">

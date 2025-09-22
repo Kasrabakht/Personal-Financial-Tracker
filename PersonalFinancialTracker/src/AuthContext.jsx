@@ -23,8 +23,8 @@ useEffect(()=>{
     else localStorage.removeItem("user")
 },[user]);
 
-const signIn=({username,email})=>setUser({username,email});
-const signOut=()=>setUser(null);
+  const signIn = ({ _id, username, email }) => setUser({ id: _id, username, email });
+  const signOut = () => setUser(null);
 
 return(
     <AuthContext.Provider value={{user,signIn,signOut}}>

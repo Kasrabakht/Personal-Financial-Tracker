@@ -3,8 +3,9 @@ import { useAuth } from "./AuthContext";
 
 export default function RequireAuth({ children }) {
   const { user } = useAuth();
+   const token = localStorage.getItem("token");
   const location = useLocation();
-  if (!user) {
+  if (!user|| !token) {
     // send them to /signin and remember where they tried to go
     return <Navigate to="/signin" replace state={{ from: location }} />;
   }
