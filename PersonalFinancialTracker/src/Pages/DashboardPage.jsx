@@ -1,6 +1,6 @@
 import React from "react";
-import { FinancialRecordForm } from "./Finacial-Record-Form";
-import { FinancialRecordList } from "./Financial-Record-List";
+import  {FinancialRecordForm}  from "./Finacial-Record-Form";
+import  FinancialRecordList from "./Financial-Record-List";
 import { useAuth } from "../AuthContext";
 import { FinancialRecordProvider } from "../Context/financialrecord-context";
 import { getRecords } from "../Context/logIn";

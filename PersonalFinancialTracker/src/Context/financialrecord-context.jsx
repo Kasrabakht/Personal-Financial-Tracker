@@ -11,25 +11,40 @@ export default FinancialRecordContext;
 export const FinancialRecordProvider = ({ children }) => {
   const [records, setRecords] = useState([]);
 
-  const fetchRecords=async()=>
-  {
-    const response=await fetch(`http://localhost:5000/api/financial-records/user/:${userId}`);
-    if(response.ok)
-    {
-      const records=await response.json();
-      setRecords(records);
-    }
+  const BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+const fetchRecords = async () => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  console.log("BASE =", BASE); // sanity check
+  const res = await fetch(`${BASE}/api/financial-records/mine`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(`GET /mine -> ${res.status}: ${text}`);
   }
+  setRecords(await res.json());
+};
 
   useEffect(()=>{
     fetchRecords();
   },[])
 
-  const addRecord = async (record) => {
+
+  const addRecord = async (record) => 
+    {
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("No token found. Please log in again.");
     const response= await fetch("http://localhost:5000/api/financial-records",
       {method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(record)})
+       headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,   // ← required
+    },
+    body: JSON.stringify(record),   });
 
 
   

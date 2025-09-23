@@ -8,6 +8,8 @@ export async function signup({ username, email, password }) {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Signup failed");
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
   return data; // { user, token }
 }
 
@@ -19,6 +21,8 @@ export async function login({ email, password }) {
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.error || "Login failed");
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
   return data; // { user, token }
 }
 

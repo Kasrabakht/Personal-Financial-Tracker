@@ -1,45 +1,31 @@
 import express, { response } from "express";
 import FinancialRecordModel from "../models/financial-record.js"
+import auth from "../middlewer/requireAuth.js";
 
 const router = express.Router();
 
-router.get("/user/:userId",async(request,response)=>
-{
-    try{
-        const {userId}=request.params;
-        const records=await FinancialRecordModel.find({userId});
+router.get("/mine", auth, async (req, res) => {
+  try {
+    const records = await FinancialRecordModel
+      .find({ userId: req.userId })
+      .sort({ createdAt: -1 });
+    res.status(200).json(records);         // [] if none
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
 
-        if(!records || records.length === 0)
-        {
-            return response.status(404).json({message: "No records found for the user."})
 
-        }
-        return response.status(200).json(records);
+router.post("/", auth, async (req, res) => {
+  const { amount, date, category, description, paymentMethod } = req.body;
+  const doc = await FinancialRecordModel.create({
+    userId: req.userId,   // 👈 server sets it
+    amount, date, category, description, paymentMethod,
+  });
+  return res.status(201).json(doc);
+});
 
-    }
-    catch(err)
-    {
-        console.error(err);
-        return res.status(500).json({ error: err.message });
-
-    }
-})
-
-router.post("/",async(request,response)=>
-{
-    try{
-        const newRecord=await FinancialRecordModel.create(request.body);
-
-       return response.status(201).json(newRecord);
-
-    }
-    catch(err)
-    {
-         console.error(err);
-        return res.status(500).json({ error: err.message });
-
-    }
-})
 
 router.put("/:id",async(request,response)=>
 {
